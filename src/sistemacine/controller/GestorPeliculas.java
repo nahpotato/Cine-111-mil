@@ -5,63 +5,61 @@ import java.util.List;
 import sistemacine.models.Calificacion;
 import sistemacine.models.Genero;
 import sistemacine.models.PaisDeOrigen;
+import sistemacine.models.Pelicula;
 
 public class GestorPeliculas {
     
     private List<Genero> generos;
     private List<Calificacion> calificaciones;
     private List<PaisDeOrigen> paisesDeOrigen;
+    private List<Pelicula> peliculas;
     
     public GestorPeliculas() {
+        inicializarCampos();
         rellenarGeneros();
         rellenarCalificaciones();
         rellenarPaisesDeOrigen();
     }
     
-    private void rellenarGeneros() {
-        List<Genero> listaGenero = new ArrayList<>();
-        
-        listaGenero.add(new Genero("Acción"));
-        listaGenero.add(new Genero("Terror"));
-        listaGenero.add(new Genero("Comedia"));
-        listaGenero.add(new Genero("Suspenso"));
-        listaGenero.add(new Genero("Aventura"));
-        listaGenero.add(new Genero("Ciencia ficción"));
-        listaGenero.add(new Genero("Romance"));
-        listaGenero.add(new Genero("Drama"));
-        listaGenero.add(new Genero("Comedia musical"));
-        listaGenero.add(new Genero("Documental"));
-        listaGenero.add(new Genero("Misterio"));
-        listaGenero.add(new Genero("Fantástico"));
-        listaGenero.add(new Genero("Gore"));
-        listaGenero.add(new Genero("Policíaco"));
-        listaGenero.add(new Genero("Thriller"));
-        
-        this.setGeneros(listaGenero);
+    private void inicializarCampos() {
+        setGeneros(new ArrayList<>());
+        setCalificaciones(new ArrayList<>());
+        setPaisesDeOrigen(new ArrayList<>());
+        setPeliculas(new ArrayList<>());
+    }
+    
+    private void rellenarGeneros() {        
+        getGeneros().add(new Genero("Acción"));
+        getGeneros().add(new Genero("Terror"));
+        getGeneros().add(new Genero("Comedia"));
+        getGeneros().add(new Genero("Suspenso"));
+        getGeneros().add(new Genero("Aventura"));
+        getGeneros().add(new Genero("Ciencia ficción"));
+        getGeneros().add(new Genero("Romance"));
+        getGeneros().add(new Genero("Drama"));
+        getGeneros().add(new Genero("Comedia musical"));
+        getGeneros().add(new Genero("Documental"));
+        getGeneros().add(new Genero("Misterio"));
+        getGeneros().add(new Genero("Fantástico"));
+        getGeneros().add(new Genero("Gore"));
+        getGeneros().add(new Genero("Policíaco"));
+        getGeneros().add(new Genero("Thriller"));
     }
     
     private void rellenarCalificaciones() {
-        List<Calificacion> listaCalificaciones = new ArrayList<>();
-        
-        listaCalificaciones.add(new Calificacion("Excelente"));
-        listaCalificaciones.add(new Calificacion("Muy buena"));
-        listaCalificaciones.add(new Calificacion("Buena"));
-        listaCalificaciones.add(new Calificacion("Regular"));
-        listaCalificaciones.add(new Calificacion("Mala"));
-        
-        this.setCalificaciones(listaCalificaciones);
+        getCalificaciones().add(new Calificacion("Excelente"));
+        getCalificaciones().add(new Calificacion("Muy buena"));
+        getCalificaciones().add(new Calificacion("Buena"));
+        getCalificaciones().add(new Calificacion("Regular"));
+        getCalificaciones().add(new Calificacion("Mala"));
     }
     
     private void rellenarPaisesDeOrigen() {
-        List<PaisDeOrigen> listaPaisesDeOrigen = new ArrayList<>();
-        
-        listaPaisesDeOrigen.add(new PaisDeOrigen("Español", "Argentina"));
-        listaPaisesDeOrigen.add(new PaisDeOrigen("Inglés", "Australia"));
-        listaPaisesDeOrigen.add(new PaisDeOrigen("Inglés", "Estados Unidos"));
-        listaPaisesDeOrigen.add(new PaisDeOrigen("Francés", "Francia"));
-        listaPaisesDeOrigen.add(new PaisDeOrigen("Español", "España"));
-        
-        this.setPaisesDeOrigen(listaPaisesDeOrigen);
+        getPaisesDeOrigen().add(new PaisDeOrigen("Español", "Argentina"));
+        getPaisesDeOrigen().add(new PaisDeOrigen("Inglés", "Australia"));
+        getPaisesDeOrigen().add(new PaisDeOrigen("Inglés", "Estados Unidos"));
+        getPaisesDeOrigen().add(new PaisDeOrigen("Francés", "Francia"));
+        getPaisesDeOrigen().add(new PaisDeOrigen("Español", "España"));
     }
 
     public List<Genero> getGeneros() {
@@ -86,5 +84,13 @@ public class GestorPeliculas {
 
     public void setPaisesDeOrigen(List<PaisDeOrigen> paisesDeOrigen) {
         this.paisesDeOrigen = paisesDeOrigen;
+    }
+
+    public List<Pelicula> getPeliculas() {
+        return peliculas;
+    }
+
+    public void setPeliculas(List<Pelicula> peliculas) {
+        this.peliculas = peliculas;
     }
 }
