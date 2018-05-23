@@ -1,5 +1,7 @@
 package sistemacine.models;
 
+import java.util.Objects;
+
 public class Personaje {
     
     private String nombreEnPelicula;
@@ -28,5 +30,38 @@ public class Personaje {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.nombreEnPelicula);
+        hash = 59 * hash + Objects.hashCode(this.actor);
+        hash = 59 * hash + Objects.hashCode(this.rol);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Personaje other = (Personaje) obj;
+        if (!Objects.equals(this.nombreEnPelicula, other.nombreEnPelicula)) {
+            return false;
+        }
+        if (!Objects.equals(this.actor, other.actor)) {
+            return false;
+        }
+        if (!Objects.equals(this.rol, other.rol)) {
+            return false;
+        }
+        return true;
     }
 }

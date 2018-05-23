@@ -2,6 +2,7 @@ package sistemacine.models;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class Funcion {
     
@@ -49,5 +50,46 @@ public class Funcion {
 
     public void setEntradas(List<Entrada> entradas) {
         this.entradas = entradas;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.diaSemana);
+        hash = 41 * hash + this.duracion;
+        hash = 41 * hash + Objects.hashCode(this.horaInicio);
+        hash = 41 * hash + (int) (this.numero ^ (this.numero >>> 32));
+        hash = 41 * hash + Objects.hashCode(this.entradas);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Funcion other = (Funcion) obj;
+        if (this.duracion != other.duracion) {
+            return false;
+        }
+        if (this.numero != other.numero) {
+            return false;
+        }
+        if (!Objects.equals(this.diaSemana, other.diaSemana)) {
+            return false;
+        }
+        if (!Objects.equals(this.horaInicio, other.horaInicio)) {
+            return false;
+        }
+        if (!Objects.equals(this.entradas, other.entradas)) {
+            return false;
+        }
+        return true;
     }
 }
