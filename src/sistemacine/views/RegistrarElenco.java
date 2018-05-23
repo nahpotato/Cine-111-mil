@@ -1,6 +1,7 @@
 package sistemacine.views;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,10 @@ public class RegistrarElenco extends javax.swing.JFrame {
         
         cancelarButton.addActionListener((ActionEvent ae) -> {
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        });
+        
+        animadoCheckBox.addItemListener((ItemEvent ie) -> {
+            animadoCheckBoxItemStateChanged();
         });
     }
 
@@ -329,6 +334,12 @@ public class RegistrarElenco extends javax.swing.JFrame {
         }
         
         return false;
+    }
+    
+    private void animadoCheckBoxItemStateChanged() {
+        nombreTextField.setEnabled(!animadoCheckBox.isSelected());
+        apellidoTextField.setEnabled(!animadoCheckBox.isSelected());
+        sexoTextField.setEnabled(!animadoCheckBox.isSelected());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

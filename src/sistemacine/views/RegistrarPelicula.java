@@ -294,6 +294,8 @@ public class RegistrarPelicula extends javax.swing.JFrame {
         } else {
             System.out.println("Ocurrió un error registrando la pelicula " + pelicula.getNombre());
         }
+        
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
     
     private void registrarElenco() {
