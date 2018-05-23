@@ -9,6 +9,7 @@ import sistemacine.models.Calificacion;
 import sistemacine.models.Genero;
 import sistemacine.models.PaisDeOrigen;
 import sistemacine.models.Pelicula;
+import sistemacine.utilities.StringUtils;
 
 public class RegistrarPelicula extends javax.swing.JFrame {
 
@@ -269,6 +270,10 @@ public class RegistrarPelicula extends javax.swing.JFrame {
     }
     
     private void registrarPelicula() {
+        if (hayCamposVacios()) {
+            return;
+        }
+        
         pelicula.setAñoEstreno(Integer.parseInt(añoEstrenoTextField.getText()));
         pelicula.setCalificacion((Calificacion)calificacionesComboBox.getSelectedItem());
         pelicula.setDisponible(disponibleRadioButton.isSelected());
@@ -294,6 +299,43 @@ public class RegistrarPelicula extends javax.swing.JFrame {
     private void registrarElenco() {
         RegistrarElenco registrarElencoFrame = new RegistrarElenco(pelicula);
         registrarElencoFrame.setVisible(true);
+    }
+    
+    private boolean hayCamposVacios() {
+        String nombre = nombreTextField.getText();
+        String duracion = duracionTextField.getText();
+        String tituloOriginal = tituloOriginalTextField.getText();
+        String añoEstreno = añoEstrenoTextField.getText();
+        
+        if (StringUtils.isNullOrWhitespace(nombre) || StringUtils.isNullOrEmpty(nombre)) {
+            JOptionPane.showMessageDialog(this, "Ingrese el nombre de la pelicula.");
+            nombreTextField.requestFocusInWindow();
+            nombreTextField.selectAll();
+            return true;
+        }
+        
+        if (StringUtils.isNullOrWhitespace(duracion) || StringUtils.isNullOrEmpty(duracion)) {
+            JOptionPane.showMessageDialog(this, "Ingrese la duracion de la pelicula.");
+            duracionTextField.requestFocusInWindow();
+            duracionTextField.selectAll();
+            return true;
+        }
+        
+        if (StringUtils.isNullOrWhitespace(tituloOriginal) || StringUtils.isNullOrEmpty(tituloOriginal)) {
+            JOptionPane.showMessageDialog(this, "Ingrese el titulo original de la película.");
+            tituloOriginalTextField.requestFocusInWindow();
+            tituloOriginalTextField.selectAll();
+            return true;
+        }
+        
+        if (StringUtils.isNullOrWhitespace(añoEstreno) || StringUtils.isNullOrEmpty(añoEstreno)) {
+            JOptionPane.showMessageDialog(this, "Ingrese el año de estreno de la pelicula.");
+            añoEstrenoTextField.requestFocusInWindow();
+            añoEstrenoTextField.selectAll();
+            return true;
+        }
+        
+        return false;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
