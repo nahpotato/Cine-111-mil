@@ -285,14 +285,15 @@ public class RegistrarPelicula extends javax.swing.JFrame {
         }
         
         if (gestorPeliculas.getPeliculas().add(pelicula)) {
-            System.out.println("La pelicula " + pelicula.getNombre() + "se ha registrado exitosamente.");
+            System.out.println("La pelicula " + pelicula.getNombre() + " se ha registrado exitosamente.");
         } else {
             System.out.println("Ocurrió un error registrando la pelicula " + pelicula.getNombre());
         }
     }
     
     private void registrarElenco() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        RegistrarElenco registrarElencoFrame = new RegistrarElenco(pelicula);
+        registrarElencoFrame.setVisible(true);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

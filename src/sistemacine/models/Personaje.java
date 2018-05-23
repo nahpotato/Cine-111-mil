@@ -64,4 +64,14 @@ public class Personaje {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        if (this.getActor().isAnimado()) {
+            return this.getNombreEnPelicula();
+        } else {
+            return this.getActor().getNombre() + " " + this.getActor().getApellido()
+                    + " como " + this.getNombreEnPelicula();
+        }
+    }
 }
