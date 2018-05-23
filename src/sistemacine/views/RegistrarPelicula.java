@@ -2,18 +2,23 @@ package sistemacine.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
 import sistemacine.controller.GestorPeliculas;
 import sistemacine.models.Calificacion;
 import sistemacine.models.Genero;
 import sistemacine.models.PaisDeOrigen;
+import sistemacine.models.Pelicula;
 
 public class RegistrarPelicula extends javax.swing.JFrame {
 
-    private GestorPeliculas gestorPeliculas;
+    private final GestorPeliculas gestorPeliculas;
+    private final Pelicula pelicula;
     
     public RegistrarPelicula() {
         initComponents();
         gestorPeliculas = new GestorPeliculas();
+        pelicula = new Pelicula();
         
         rellenarGenerosComboBox();
         rellenarCalificacionesComboBox();
@@ -25,6 +30,10 @@ public class RegistrarPelicula extends javax.swing.JFrame {
         
         confirmarButton.addActionListener((ActionEvent ae) -> {
             registrarPelicula();
+        });
+        
+        registrarElencoButton.addActionListener((ActionEvent ae) -> {
+            registrarElenco();
         });
     }
 
@@ -41,18 +50,18 @@ public class RegistrarPelicula extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         paisesDeOrigenComboBox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nombreTextField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        duracionTextField = new javax.swing.JTextField();
+        tituloOriginalTextField = new javax.swing.JTextField();
+        añoEstrenoTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        registrarElencoButton = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        disponibleRadioButton = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         cancelarButton = new javax.swing.JButton();
         confirmarButton = new javax.swing.JButton();
@@ -124,9 +133,9 @@ public class RegistrarPelicula extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tituloOriginalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(duracionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(añoEstrenoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(147, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -135,26 +144,26 @@ public class RegistrarPelicula extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(duracionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tituloOriginalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(añoEstrenoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jLabel8.setText("Registrar Elenco:");
 
-        jButton1.setText("Registrar");
+        registrarElencoButton.setText("Registrar");
 
         jLabel9.setText("Disponible:");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Sí");
+        buttonGroup1.add(disponibleRadioButton);
+        disponibleRadioButton.setText("Sí");
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setSelected(true);
@@ -175,7 +184,7 @@ public class RegistrarPelicula extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -196,9 +205,9 @@ public class RegistrarPelicula extends javax.swing.JFrame {
                                     .addComponent(jLabel9))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
+                                    .addComponent(registrarElencoButton)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
+                                        .addComponent(disponibleRadioButton)
                                         .addGap(18, 18, 18)
                                         .addComponent(jRadioButton2)))
                                 .addGap(0, 0, Short.MAX_VALUE))
@@ -213,7 +222,7 @@ public class RegistrarPelicula extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -224,11 +233,11 @@ public class RegistrarPelicula extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jButton1))
+                    .addComponent(registrarElencoButton))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jRadioButton1)
+                    .addComponent(disponibleRadioButton)
                     .addComponent(jRadioButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -242,34 +251,59 @@ public class RegistrarPelicula extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rellenarGenerosComboBox() {        
-        for (Genero genero : gestorPeliculas.getGeneros()) {
+        gestorPeliculas.getGeneros().forEach((genero) -> {
             generosComboBox.addItem(genero);
-        }
+        });
     }
     
     private void rellenarCalificacionesComboBox() {
-        for (Calificacion calificacion : gestorPeliculas.getCalificaciones()) {
+        gestorPeliculas.getCalificaciones().forEach((calificacion) -> {
             calificacionesComboBox.addItem(calificacion);
-        }
+        });
     }
     
     private void rellenarPaisesDeOrigenComboBox() {
-        for (PaisDeOrigen paisDeOrigen : gestorPeliculas.getPaisesDeOrigen()) {
+        gestorPeliculas.getPaisesDeOrigen().forEach((paisDeOrigen) -> {
             paisesDeOrigenComboBox.addItem(paisDeOrigen);
-        }
+        });
     }
     
     private void registrarPelicula() {
+        pelicula.setAñoEstreno(Integer.parseInt(añoEstrenoTextField.getText()));
+        pelicula.setCalificacion((Calificacion)calificacionesComboBox.getSelectedItem());
+        pelicula.setDisponible(disponibleRadioButton.isSelected());
+        pelicula.setDuracion(Integer.parseInt(duracionTextField.getText()));
+        pelicula.setFechaIngreso(LocalDate.now());
+        pelicula.setGenero((Genero)generosComboBox.getSelectedItem());
+        pelicula.setNombre(nombreTextField.getText());
+        pelicula.setPaisDeOrigen((PaisDeOrigen)paisesDeOrigenComboBox.getSelectedItem());
+        pelicula.setTituloOriginal(tituloOriginalTextField.getText());
+        
+        if (gestorPeliculas.getPeliculas().contains(pelicula)) {
+            JOptionPane.showMessageDialog(this, "La pelicula ya se encuentra registrada.");
+            return;
+        }
+        
+        if (gestorPeliculas.getPeliculas().add(pelicula)) {
+            System.out.println("La pelicula " + pelicula.getNombre() + "se ha registrado exitosamente.");
+        } else {
+            System.out.println("Ocurrió un error registrando la pelicula " + pelicula.getNombre());
+        }
+    }
+    
+    private void registrarElenco() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField añoEstrenoTextField;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<sistemacine.models.Calificacion> calificacionesComboBox;
     private javax.swing.JButton cancelarButton;
     private javax.swing.JButton confirmarButton;
+    private javax.swing.JRadioButton disponibleRadioButton;
+    private javax.swing.JTextField duracionTextField;
     private javax.swing.JComboBox<sistemacine.models.Genero> generosComboBox;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -282,12 +316,10 @@ public class RegistrarPelicula extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField nombreTextField;
     private javax.swing.JComboBox<sistemacine.models.PaisDeOrigen> paisesDeOrigenComboBox;
+    private javax.swing.JButton registrarElencoButton;
+    private javax.swing.JTextField tituloOriginalTextField;
     // End of variables declaration//GEN-END:variables
 }

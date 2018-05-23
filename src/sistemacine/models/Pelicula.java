@@ -156,12 +156,6 @@ public class Pelicula {
         if (!Objects.equals(this.paisDeOrigen, other.paisDeOrigen)) {
             return false;
         }
-        if (!Objects.equals(this.calificacion, other.calificacion)) {
-            return false;
-        }
-        if (!Objects.equals(this.personajes, other.personajes)) {
-            return false;
-        }
         return true;
     }
 }
