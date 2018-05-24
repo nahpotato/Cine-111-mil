@@ -20,8 +20,8 @@ public class CollectionEvent {
     public CollectionEvent(CollectionAction action) {
         this.action = action;
         
-        this.newItems = new ArrayList();
-        this.oldItems = new ArrayList();
+        this.newItems = null;
+        this.oldItems = null;
         this.newStartingIndex = -1;
         this.oldStartingIndex = -1;
     }
@@ -39,15 +39,15 @@ public class CollectionEvent {
         switch (action) {
             case ADD:
                 this.newItems = changedItems;
-                this.oldItems = new ArrayList();
+                this.oldItems = null;
                 break;
             case REMOVE:
-                this.newItems = new ArrayList();
+                this.newItems = null;
                 this.oldItems = changedItems;
                 break;
             default:
-                this.newItems = new ArrayList();
-                this.oldItems = new ArrayList();
+                this.newItems = null;
+                this.oldItems = null;
                 break;
         }
         
@@ -142,19 +142,19 @@ public class CollectionEvent {
         switch (action) {
             case ADD:
                 this.newItems = changedItems;
-                this.oldItems = new ArrayList();
+                this.oldItems = null;
                 this.newStartingIndex = startingIndex;
                 this.oldStartingIndex = -1;
                 break;
             case REMOVE:
-                this.newItems = new ArrayList();
+                this.newItems = null;
                 this.oldItems = changedItems;
                 this.newStartingIndex = -1;
                 this.oldStartingIndex = startingIndex;
                 break;
             default:
-                this.newItems = new ArrayList();
-                this.oldItems = new ArrayList();
+                this.newItems = null;
+                this.oldItems = null;
                 this.newStartingIndex = -1;
                 this.oldStartingIndex = -1;
                 break;
@@ -182,7 +182,7 @@ public class CollectionEvent {
         }
         
         this.action = action;
-        this.newItems = changedItems;
+        this.newItems = null;
         this.oldItems = changedItems;
         this.newStartingIndex = index;
         this.oldStartingIndex = oldIndex;
@@ -208,15 +208,23 @@ public class CollectionEvent {
         }
         
         this.action = action;
-        this.newItems = new ArrayList();
-        this.oldItems = new ArrayList();
         
         switch (action) {
             case ADD:
+                this.newItems = new ArrayList();
+                this.oldItems = null;
+                
                 this.newItems.add(changedItem);
                 break;
             case REMOVE:
+                this.newItems = null;
+                this.oldItems = new ArrayList();
+                
                 this.oldItems.add(changedItem);
+                break;
+            default:
+                this.newItems = null;
+                this.oldItems = null;
                 break;
         }
         
@@ -245,21 +253,27 @@ public class CollectionEvent {
         }
         
         this.action = action;
-        this.newItems = new ArrayList();
-        this.oldItems = new ArrayList();
         
         switch (action) {
             case ADD:
+                this.newItems = new ArrayList<>();
+                this.oldItems = null;
+                
                 this.newItems.add(changedItem);
                 this.newStartingIndex = index;
                 this.oldStartingIndex = -1;
                 break;
             case REMOVE:
+                this.newItems = null;
+                this.oldItems = new ArrayList();
+                
                 this.oldItems.add(changedItem);
                 this.newStartingIndex = -1;
                 this.oldStartingIndex = index;
                 break;
             default:
+                this.newItems = null;
+                this.oldItems = null;
                 this.newStartingIndex = -1;
                 this.oldStartingIndex = -1;
                 break;
@@ -287,12 +301,11 @@ public class CollectionEvent {
         }
         
         this.action = action;
-        this.newItems = new ArrayList();
+        this.newItems = null;
         this.oldItems = new ArrayList();
         this.newStartingIndex = index;
         this.oldStartingIndex = oldIndex;
         
-        this.newItems.add(changedItem);
         this.oldItems.add(changedItem);
     }
     

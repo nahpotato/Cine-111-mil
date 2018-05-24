@@ -3,10 +3,11 @@ package sistemacine.views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import nucleuxsoft.collections.CollectionEvent;
+import nucleuxsoft.collections.ObservableList;
 import sistemacine.models.Actor;
 import sistemacine.models.Pelicula;
 import sistemacine.models.Personaje;
@@ -17,7 +18,7 @@ import sistemacine.utilities.StringUtils;
 public class RegistrarElenco extends javax.swing.JFrame {
 
     private final Pelicula pelicula;
-    private final List<Personaje> personajes;
+    private final ObservableList<Personaje> personajes;
     
     public RegistrarElenco(Pelicula pelicula) {
         if (pelicula == null) {
@@ -30,12 +31,12 @@ public class RegistrarElenco extends javax.swing.JFrame {
         initComponents();
         
         if (this.pelicula.getPersonajes() == null) {
-            this.pelicula.setPersonajes(personajes = new ArrayList<>());
+            this.pelicula.setPersonajes(personajes = new ObservableList<>());
         } else {
-            personajes = this.pelicula.getPersonajes();
+            personajes = (ObservableList<Personaje>) this.pelicula.getPersonajes();
         }
         
-        actualizarPersonajesList();
+        rellenarPersonajesList();
         
         añadirButton.addActionListener((ActionEvent ae) -> {
             añadirPersonaje();
@@ -51,6 +52,10 @@ public class RegistrarElenco extends javax.swing.JFrame {
         
         animadoCheckBox.addItemListener((ItemEvent ie) -> {
             animadoCheckBoxItemStateChanged();
+        });
+        
+        personajes.addCollectionListener((CollectionEvent ce) -> {
+            actualizarPersonajesList(ce.getNewItems());
         });
     }
 
@@ -173,6 +178,7 @@ public class RegistrarElenco extends javax.swing.JFrame {
 
         añadirButton.setText("Añadir");
 
+        personajesList.setModel(new DefaultListModel());
         personajesList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         personajesList.setEnabled(false);
         personajesList.setFocusable(false);
@@ -225,10 +231,10 @@ public class RegistrarElenco extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void actualizarPersonajesList() {
-        DefaultListModel<Personaje> listModel = new DefaultListModel<>();
+    private void actualizarPersonajesList(List newItems) {
+        DefaultListModel listModel = (DefaultListModel) personajesList.getModel();
         
-        personajes.forEach((personaje) -> {
+        newItems.forEach((personaje) -> {
             listModel.addElement(personaje);
         });
         
@@ -255,13 +261,17 @@ public class RegistrarElenco extends javax.swing.JFrame {
         
         personaje.setActor(actor);
         
+        if (personajes.contains(personaje)) {
+            JOptionPane.showMessageDialog(this, "El personaje ya fue agregado.");
+            return;
+        }
+        
         if (personajes.add(personaje)) {
             System.out.println("El personaje " + personaje.getNombreEnPelicula() + " fue añadido exitosamente.");
         } else {
             System.out.println("Ocurrió un error añadiendo el personaje " + personaje.getNombreEnPelicula());
         }
         
-        actualizarPersonajesList();
         limpiarCampos();
     }
     
@@ -340,6 +350,16 @@ public class RegistrarElenco extends javax.swing.JFrame {
         nombreTextField.setEnabled(!animadoCheckBox.isSelected());
         apellidoTextField.setEnabled(!animadoCheckBox.isSelected());
         sexoTextField.setEnabled(!animadoCheckBox.isSelected());
+    }
+    
+    private void rellenarPersonajesList() {
+        DefaultListModel listModel = (DefaultListModel) personajesList.getModel();
+        
+        personajes.forEach((personaje) -> {
+            listModel.addElement(personaje);
+        });
+        
+        personajesList.setModel(listModel);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
