@@ -2,6 +2,7 @@ package sistemacine.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import nucleuxsoft.collections.ObservableList;
 import sistemacine.models.Calificacion;
 import sistemacine.models.Genero;
 import sistemacine.models.PaisDeOrigen;
@@ -9,23 +10,31 @@ import sistemacine.models.Pelicula;
 
 public class GestorPeliculas {
     
+    private static GestorPeliculas current;
+    
     private List<Genero> generos;
     private List<Calificacion> calificaciones;
     private List<PaisDeOrigen> paisesDeOrigen;
     private List<Pelicula> peliculas;
     
     public GestorPeliculas() {
+        current = this;
+        
         inicializarCampos();
         rellenarGeneros();
         rellenarCalificaciones();
         rellenarPaisesDeOrigen();
     }
     
+    public static GestorPeliculas getCurrent() {
+        return current;
+    }
+    
     private void inicializarCampos() {
         setGeneros(new ArrayList<>());
         setCalificaciones(new ArrayList<>());
         setPaisesDeOrigen(new ArrayList<>());
-        setPeliculas(new ArrayList<>());
+        setPeliculas(new ObservableList<>());
     }
     
     private void rellenarGeneros() {        

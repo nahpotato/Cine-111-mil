@@ -18,7 +18,7 @@ public class RegistrarPelicula extends javax.swing.JFrame {
     
     public RegistrarPelicula() {
         initComponents();
-        gestorPeliculas = new GestorPeliculas();
+        gestorPeliculas = GestorPeliculas.getCurrent();
         pelicula = new Pelicula();
         
         rellenarGenerosComboBox();

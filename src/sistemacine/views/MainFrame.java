@@ -1,14 +1,30 @@
 package sistemacine.views;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import nucleuxsoft.collections.CollectionEvent;
+import nucleuxsoft.collections.ObservableList;
+import sistemacine.controller.GestorPeliculas;
+import sistemacine.models.Pelicula;
 
 public class MainFrame extends javax.swing.JFrame {
+    
+    private final GestorPeliculas gestorPeliculas;
+    private final ObservableList<Pelicula> peliculas;
 
     public MainFrame() {
         initComponents();
         
-        registrarPeliculaMenuItem.addActionListener((ActionEvent ae) -> {
+        gestorPeliculas = GestorPeliculas.getCurrent();
+        peliculas = (ObservableList<Pelicula>)gestorPeliculas.getPeliculas();
+        
+        registrarPeliculaButton.addActionListener((ActionEvent ae) -> {
             registrarPelicula();
+        });
+        
+        peliculas.addCollectionListener((CollectionEvent ce) -> {
+            actualizarPeliculasList(ce.getNewItems());
         });
     }
 
@@ -16,35 +32,41 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        nuevoCineMenuItem = new javax.swing.JMenuItem();
-        registrarPeliculaMenuItem = new javax.swing.JMenuItem();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        peliculasList = new javax.swing.JList<>();
+        registrarPeliculaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema Cine");
 
-        jMenu1.setText("Archivo");
+        peliculasList.setModel(new DefaultListModel());
+        peliculasList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        peliculasList.setEnabled(false);
+        jScrollPane1.setViewportView(peliculasList);
 
-        nuevoCineMenuItem.setText("Nuevo cine");
-        jMenu1.add(nuevoCineMenuItem);
-
-        registrarPeliculaMenuItem.setText("Registrar Pelicula");
-        jMenu1.add(registrarPeliculaMenuItem);
-
-        jMenuBar1.add(jMenu1);
-
-        setJMenuBar(jMenuBar1);
+        registrarPeliculaButton.setText("Registrar Pelicula");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 614, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(registrarPeliculaButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(registrarPeliculaButton)
+                .addContainerGap())
         );
 
         pack();
@@ -56,10 +78,19 @@ public class MainFrame extends javax.swing.JFrame {
         registrarPelicula.setVisible(true);
     }
     
+    private void actualizarPeliculasList(List newItems) {
+        DefaultListModel listModel = (DefaultListModel) peliculasList.getModel();
+        
+        newItems.forEach((item) -> {
+            listModel.addElement(item);
+        });
+        
+        peliculasList.setModel(listModel);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem nuevoCineMenuItem;
-    private javax.swing.JMenuItem registrarPeliculaMenuItem;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<Pelicula> peliculasList;
+    private javax.swing.JButton registrarPeliculaButton;
     // End of variables declaration//GEN-END:variables
 }
